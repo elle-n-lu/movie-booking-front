@@ -3,7 +3,9 @@ import SlideBbuttons from "@/components/slide_buttons";
 import React, { useEffect, useState } from "react";
 export interface session {
   session_time: string;
+  id: number
 }
+
 export interface schedule {
   schedule_date: string;
   sessions: session[];
@@ -15,6 +17,7 @@ interface movie {
   schedules: schedule[];
 }
 interface pageProps {
+  seatId:number
   item: number;
   setItem: (item: number) => void;
   cinemaId: number;
@@ -28,7 +31,7 @@ const movieslicer = (movie: any) => {
     movieslist.push(movie);
     return movieslist;
   } else {
-    n = Math.floor(movie.length / 3); //n=3, movies = 13
+    n = Math.floor(movie.length / 2); //n=3, movies = 13
     for (let i = 0; i < movie.length; i += n) {
       // i= 0,4,8,12
       movieslist.push(movie.slice(i, i + n));
@@ -37,17 +40,19 @@ const movieslicer = (movie: any) => {
   }
 };
 const Movie: React.FC<pageProps> = ({
+  seatId,
   item,
   setItem,
   cinemaId,
   setSchedules,
   setSession,
 }) => {
-
+ 
   const [movielist, setMovielist] = useState<any[]>([]);
+  // console.log('seatid',seatId)
   const getmovies = async () => {
     await api_url
-      .get("/ajax_movies/" + cinemaId)
+      .get("/ajax_movies/" +seatId+'/'+ cinemaId)
       .then((res) => {
         setMovielist(movieslicer(res.data));
         setSchedules(res.data[0] ? res.data[0].schedules : []);
@@ -64,13 +69,11 @@ const Movie: React.FC<pageProps> = ({
 
   useEffect(() => {
     getmovies();
-  }, [cinemaId]);
+  }, [cinemaId,seatId]);
 
-  // console.log('cinemaid',cinemaId, movielist)
 
   const body = (item: number) => {
     if (movielist.length > 0) {
-    //   console.log("movie", movielist.length, item);
       return (
         <div className="flex">
           {movielist[item].map((movie: movie, index: number) => (
