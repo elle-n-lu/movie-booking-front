@@ -5,6 +5,7 @@ import { seat_p } from "@/seats/seat";
 import { api_url } from "@/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Ticket from "@/components/ticket";
 
 interface pageProps {
   token: string | undefined;
@@ -14,6 +15,8 @@ interface pageProps {
   totalseats: seat_p[];
   cinemeId: number;
   userId: number | undefined | null;
+  schedule:schedule 
+  setSchedule:(schedule:schedule)=>void
 }
 interface seatS {
   seatNo: string;
@@ -44,6 +47,7 @@ const Session: React.FC<pageProps> = ({
   totalseats,
   sessions,
   setSessions,
+  schedule, setSchedule
 }) => {
   const totalseat_len = totalseats.length;
   const [sessionId, setSessionId] = useState<number>();
@@ -57,21 +61,16 @@ const Session: React.FC<pageProps> = ({
       .get("/orders/" + sessionId)
       .then((res) => {
         // add seats var later
-        console.log("seatssolds", res.data);
         setSeatSold(res.data);
       })
       .catch((err) => console.log("errr", err));
   };
-
   // open modal to select seat
   const [open, setOpen] = useState(false);
   // according to seats total number, set up the seats layout.
   const seatsLayout = seatSold ? seatlayouts(seatSold, totalseat_len) : [];
   const [checkedSeats, setCheckedSeats] = useState<any[]>([]);
 
-  console.log("sessoinid", sessionId);
-  console.log("checkedseat", checkedSeats);
-  console.log("seatsLayout", seatsLayout);
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -87,7 +86,7 @@ const Session: React.FC<pageProps> = ({
 
   const isSeatSold = (seatNo: any) => seatSold.includes(seatNo);
 
-  const createOrder = async (checkedSeats:any, cinemeId:any, sessionId:any) => {
+  const createOrder = async (checkedSeats: any, cinemeId: any, sessionId: any) => {
     const formData = new FormData();
     formData.append("seat", checkedSeats);
     await api_url
@@ -99,7 +98,6 @@ const Session: React.FC<pageProps> = ({
         }
       )
       .then((res) => {
-        console.log("seatssolds", res.data);
         window.location.reload()
       })
       .catch((err) => console.log("errr", err));
@@ -126,9 +124,8 @@ const Session: React.FC<pageProps> = ({
                           <label className="block relative w-6 h-6 cursor-pointer">
                             <input
                               type="checkbox"
-                              className={`absolute ${
-                                rol?.sold ? "bg-slate-400" : "bg-slate-600"
-                              } `}
+                              className={`absolute ${rol?.sold ? "bg-slate-400" : "bg-slate-600"
+                                } `}
                               name={rol?.seatNo}
                               style={{ appearance: "none" }}
                               checked={isSeatChecked(rol?.seatNo)}
@@ -139,9 +136,8 @@ const Session: React.FC<pageProps> = ({
                               }
                             />
                             <span
-                              className={`relative ${
-                                rol?.sold ? "bg-slate-400" : "bg-slate-600"
-                              } ${isSeatChecked(rol?.seatNo) ? "active" : ""}`}
+                              className={`relative ${rol?.sold ? "bg-slate-400" : "bg-slate-600"
+                                } ${isSeatChecked(rol?.seatNo) ? "active" : ""}`}
                               style={{
                                 display: "block",
                                 width: "24px",
@@ -195,37 +191,32 @@ const Session: React.FC<pageProps> = ({
       </div>
     </div>
   );
+  const [calue, setCalue] = useState(-1)
+  // {/* {`#${schedule.schedule_date}`} */}
   return (
-    <div>
+    <div className="flex flex-col mt-2">
+
       {open && modal}
-      {schedules.map((schedule, index) => {
-        const date = schedule.schedule_date.split(" ")[0];
-        const d = new Date(date);
-        const day = d.getDay();
-        return (
-          <div key={index} className="flex mt-2">
-            <div className="mr-4">
-              {date.split("-")[1] + "-" + date.split("-")[2] + " " + days[day]}
+      <div className="flex justify-center">
+
+        {schedules.map((schedule, index) => {
+          const date = schedule.schedule_date.split(" ")[0];
+          const d = new Date(date);
+          const day = d.getDay();
+          return (
+            <div key={index} className="mr-3" >
+              <button onClick={() => { setSchedule(schedule); setCalue(index) }}
+                style={{
+                  backgroundColor: calue === index ? 'lightblue' : 'white'
+                }}
+              >
+                {date.split("-")[1] + "-" + date.split("-")[2] + " " + days[day]}
+              </button>
             </div>
-            <div className="flex flex-col">
-              {schedule.sessions.map((session, index1) => (
-                <div key={index1} className="flex mb-4 ">
-                  {session.session_time}
-                  <button
-                    className="p-2 text-xs ml-2 bg-orange-400"
-                    onClick={() => {
-                      setOpen(true);
-                      setSessionId(session.id);
-                    }}
-                  >
-                    Ticket
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+      {schedule && <Ticket setOpen={setOpen} schedule={schedule} setSessionId={setSessionId} />}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { api_url } from "@/api";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Body from "@/components/body";
 
 interface registeProps {}
 const Registe: React.FC<registeProps> = () => {
@@ -22,8 +23,10 @@ const Registe: React.FC<registeProps> = () => {
       .then((res) => router.push("/login"))
       .catch((error) => {console.log("error.response.data[0]",JSON.stringify(error.response.data.error));setMessage(JSON.stringify(error.response.data.error))});
   };
-  return (
-    <div className="flex flex-col w-1/2 items-center justify-center  px-6 py-8 mx-auto md:h-screen lg:py-0">
+  const body=(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
+    <>
+
+    <div className="flex flex-col border-2 w-1/2 items-center justify-center px-6 py-8 mx-auto md:h-1/2 lg:py-0">
       <form className="space-y-4 md:space-y-6" onSubmit={submitForm}>
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-900 ">
@@ -88,6 +91,11 @@ const Registe: React.FC<registeProps> = () => {
         </p>
       </form>
     </div>
+    </>)
+  return (
+    <>
+      <Body body={(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
+    </>
   );
 };
 export default Registe;

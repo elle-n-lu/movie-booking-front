@@ -24,7 +24,7 @@ const SlideBbuttons: React.FC<slide_buttonsProps> = ({item,setItem, data, body }
     }
   }, [item]);
   return (
-    <div className="flex">
+    <div className="flex justify-center mt-4">
       {data.length > 1 ? (
         <>
           {leftBtn && (

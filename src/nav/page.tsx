@@ -11,6 +11,8 @@ interface pageProps {
   setToken: (token: string | undefined) => void;
   setUserId: (userId: number | undefined) => void;
   setUser: (user: string | undefined) => void;
+  setSchedule:(schedule:any)=>void
+  
 }
 interface cinema {
   id: number;
@@ -24,6 +26,7 @@ const Nav: React.FC<pageProps> = ({
   setItem,
   cinemaId,
   setCinemaId,
+  setSchedule
 }) => {
   // retrieve all cienams name and map in select options
   //make options a grid box
@@ -45,24 +48,26 @@ const Nav: React.FC<pageProps> = ({
     getcinemas();
   }, []);
   return (
-    <nav className="flex justify-between items-center mx-3">
+    <nav className="flex bg-black justify-between items-center">
       <div>
-        <button className="p-4 mr-2 bg-blue-200 hover:bg-blue-500">Home</button>
+      <label className=" text-white font-bold text-lg text-center px-14 py-2 " ><Link href='/'>Movie tonight</Link></label>
+
         {/*  mapping cinemas */}
         <select
           name="cinemas"
-          className="p-4 bg-blue-200 hover:bg-blue-500"
+          className="px-4 py-2 text-lg bg-black text-white border-0"
           value={cinemaId}
           onChange={(e) => {
             e.preventDefault();
             setCinemaId(e.target.value as any);
+            setSchedule(null)
             setItem(0);
           }}
         >
           {cinemas &&
             cinemas.map((cinema: cinema, index) => {
               return (
-                <option value={cinema.id} key={index}>
+                <option value={cinema.id} key={index} className="">
                   {cinema.cinema_name}
                 </option>
               );
@@ -70,23 +75,23 @@ const Nav: React.FC<pageProps> = ({
         </select>
       </div>
 
-      <ul className="font-medium flex flex-col p-4 md:p-1 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+      <ul className="font-medium flex m-6">
         <li>
           <a
             href="#"
-            className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            className="block pb-2 hover:pb-0 pl-3 pr-4 text-gray-400 hover:text-white hover:border-b-2 "
           >
             About
           </a>
         </li>
         {user ? (
           <>
-            <li className=" dark:text-white dark:hover:bg-gray-700 dark:hover:text-white">
-              {user}{" "}
+            <li className=" text-gray-400 px-4">
+             hi,{" "} {user}{" "}
             </li>
             <li>
               <button
-                className="  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                className="pb-2  text-gray-400 hover:text-white hover:pb-0 hover:border-white hover:border-b-2 "
                 onClick={() => logout()}
               >
                 logout
@@ -98,7 +103,7 @@ const Nav: React.FC<pageProps> = ({
             <li>
               <Link
                 href="/registe"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block pb-2 px-3 text-gray-400 hover:pb-0 hover:text-white hover:border-white hover:border-b-2 "
               >
                 Sign up
               </Link>
@@ -106,7 +111,7 @@ const Nav: React.FC<pageProps> = ({
             <li>
               <Link
                 href="/login"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block pb-2 mr-14 text-gray-400 hover:pb-0 hover:text-white hover:border-white hover:border-b-2  "
               >
                 Sign in
               </Link>

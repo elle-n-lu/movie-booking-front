@@ -3,6 +3,7 @@ import { api_url } from '@/api';
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
+import Body from '@/components/body';
 
 interface loginProps {
 
@@ -21,16 +22,17 @@ const Login: React.FC<loginProps> = ()=>{
 
     const res = await api_url
       .post("/login", formData, { withCredentials: true })
-      .then(async (res) => {
+      .then( (res) => {
         window.localStorage.setItem("access", res.data.token);
         window.localStorage.setItem("user", JSON.stringify({'id':res.data.id,'name':res.data.user}));
         // console.log('res',res.data)
         router.push("/");
       })
-      .catch((error) => {console.log(error.response.data.error); setMessage(error.response.data.error) });
+      .catch((error) => {console.log(error.response.data.error); setMessage(JSON.stringify(error.response.data.error)) });
   };
-  
-    return (
+
+  const body=(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
+    <>
     <div className="flex flex-col border-2 w-1/2 items-center justify-center px-6 py-8 mx-auto md:h-1/2 lg:py-0">
 
        <form className="space-y-4 md:space-y-6" onSubmit={submitForm}>
@@ -40,7 +42,7 @@ const Login: React.FC<loginProps> = ()=>{
                 </label>
                 <input
                   value={username}
-                  onChange={(e) => {setUsername(e.target.value)}}
+                  onChange={(e) => {setUsername(e.target.value);setMessage('')}}
                   type="email"
                   name="email"
                   id="email"
@@ -56,7 +58,7 @@ const Login: React.FC<loginProps> = ()=>{
                 </label>
                 <input
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {setPassword(e.target.value);setMessage('')}}
                   type="password"
                   name="password"
                   id="password"
@@ -85,6 +87,10 @@ const Login: React.FC<loginProps> = ()=>{
               </p>
             </form>
     </div>
+    </>)
+    return (
+      <Body body={(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
+
     )
 }
 export default Login
