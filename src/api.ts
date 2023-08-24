@@ -7,5 +7,5 @@ import axios from 'axios';
 
 // production
 export const api_url = axios.create({
-    baseURL: 'https://shownbooking-a10ea6e13f6b.herokuapp.com/'
+    baseURL: 'https://shownbooking-a10ea6e13f6b.herokuapp.com'
   })
