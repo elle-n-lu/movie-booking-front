@@ -9,13 +9,13 @@ interface seatProps {
   seats:seat_p[],
    setSeats: (seat:seat_p[])=>void
   setSchedule:(schedule:any)=>void
-
+  setMovieCalue:(calue:number)=>void
 }
 export interface seat_p {
   id: number;
   seat_number: string;
 }
-const Seat: React.FC<seatProps> = ({setSchedule,setSeats, seats, cinemaId, setSeatId , setItem}) => {
+const Seat: React.FC<seatProps> = ({setMovieCalue,setSchedule,setSeats, seats, cinemaId, setSeatId , setItem}) => {
   const [active, setActive] = useState(false)
 
   
@@ -46,6 +46,7 @@ const Seat: React.FC<seatProps> = ({setSchedule,setSeats, seats, cinemaId, setSe
                 setSchedule(null)
                 setItem(0)
                 setCalue(index)
+                setMovieCalue(-1)
               }}
               style={{
                 color: calue === index ? 'white' : 'lightgray'

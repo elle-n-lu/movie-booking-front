@@ -30,6 +30,7 @@ const Nav: React.FC<pageProps> = ({
 }) => {
   // retrieve all cienams name and map in select options
   //make options a grid box
+
   const [cinemas, setCinemas] = useState([]);
   const getcinemas = async () => {
     await api_url

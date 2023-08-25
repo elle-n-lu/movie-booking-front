@@ -28,6 +28,8 @@ interface pageProps {
   setSchedule:(schedule:any)=>void
   token:string | undefined
   userid: number | undefined
+  setCalue:(calue:number)=>void
+  calue:number
 }
 const movieslicer = (movie: any) => {
   const movieslist = [];
@@ -53,11 +55,10 @@ const Movie: React.FC<pageProps> = ({
   setSession,
   setSchedule,
   token,
-  userid
+  userid,calue, setCalue
 }) => {
  
   const [movielist, setMovielist] = useState<any[]>([]);
-  // console.log('seatid',seatId)
   const getmovies = async () => {
     await api_url
       .get("/ajax_movies/" +seatId+'/'+ cinemaId)
@@ -87,7 +88,7 @@ const Movie: React.FC<pageProps> = ({
     getmovies();
   }, [cinemaId,seatId]);
 
-  const [calue, setCalue] = useState(-1)
+  // const [calue, setCalue] = useState(-1)
   const body = (item: number) => {
     if (movielist.length > 0) {
       return (
@@ -106,11 +107,12 @@ const Movie: React.FC<pageProps> = ({
               id:movie.id,
               token: token,
               user:userid
-             }}}  > <img src={movie.movie_poster} style={{width:'150px',height:"220px",objectFit:'contain'}} /></Link>
+             }}}  > <img src={movie.movie_poster} className="mx-auto" style={{width:'150px',height:"220px",objectFit:'contain'}} /></Link>
               <button className=" p-2 m-2   "
               onClick={()=>setCalue(index)}
               style={{
-                backgroundColor: calue === index ? 'lightblue' : 'white'
+                backgroundColor: calue === index ? 'lightblue' : 'white',
+                width:"150px"
               }}
               >
                 {movie.movie_name}
@@ -130,6 +132,7 @@ const Movie: React.FC<pageProps> = ({
         setItem={setItem}
         data={movielist}
         body={(item) => body(item)}
+        setCalue={setCalue}
       />
     </>
   );

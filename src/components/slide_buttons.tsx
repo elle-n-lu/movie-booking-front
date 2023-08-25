@@ -3,9 +3,10 @@ interface slide_buttonsProps {
   data: any;
   item:number
   setItem:(item:number)=>void
+  setCalue:(calue:number)=>void
   body: (item: number) => React.JSX.Element;
 }
-const SlideBbuttons: React.FC<slide_buttonsProps> = ({item,setItem, data, body }) => {
+const SlideBbuttons: React.FC<slide_buttonsProps> = ({setCalue,item,setItem, data, body }) => {
   
   const [leftBtn, setleftBtn] = useState(false);
   const [rightBtn, setrightBtn] = useState(false);
@@ -32,6 +33,7 @@ const SlideBbuttons: React.FC<slide_buttonsProps> = ({item,setItem, data, body }
               onClick={(e) => {
                 e.preventDefault();
                 setItem(item - 1);
+                setCalue(-1)
               }}
             >
               &lt;
@@ -43,6 +45,7 @@ const SlideBbuttons: React.FC<slide_buttonsProps> = ({item,setItem, data, body }
               onClick={(e) => {
                 e.preventDefault();
                 setItem(item + 1);
+                setCalue(-1)
               }}
             >
               &gt;

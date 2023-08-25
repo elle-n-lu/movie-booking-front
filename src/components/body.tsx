@@ -18,10 +18,12 @@ const Body: React.FC<bodyProps> = ({body})=>{
       setUser(JSON.parse(localStorage.getItem("user") as string).name)
     }
   }, [])
+
+
     return (
     <div>
       <Nav setToken={setToken} setSchedule={setSchedule}  setUserId={setUserId} setUser={setUser} user={user} setItem={setItem} cinemaId={cinemeId} setCinemaId={setCinemaId} />
-        {body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)}
+        {body(cinemeId, item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)}
     </div>)
 }
 export default Body
