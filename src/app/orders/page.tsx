@@ -25,7 +25,7 @@ interface order {
         }
     }
 }
-const page: React.FC<pageProps> = ({ }) => {
+const Order: React.FC<pageProps> = () => {
     const searchParams = useSearchParams();
     const userid = searchParams.get("id") ?? ""; // default value is ""
     const [orders, setOrders] = useState<order[]>([])
@@ -88,4 +88,4 @@ const page: React.FC<pageProps> = ({ }) => {
 
     )
 }
-export default page
+export default Order
