@@ -190,54 +190,7 @@ const Movieinfo: React.FC<movieinfoProps> = () => {
     return (
         <>
         
-        {/* <div className="p-8">
-            {movieinfo ? (
-                <div>
-                    <div className="flex w-full h-80">
-                        <img
-
-                            src={movieinfo.movie.movie_poster}
-                            style={{ width: "300px", objectFit: "contain" }}
-                        />
-                        <div className="w-1/2 text-center">
-                            <p>{movieinfo.movie.movie_name}</p>
-                            <p>{movieinfo.movie.introduction}</p>
-                            <button className="bg-green-300 p-2 rounded-lg" onClick={() => sendvote('true')}>up</button>{movieinfo.vote_up ? <label>{movieinfo.vote_up} </label> : <></>}
-                            <button className="ml-2 bg-red-300 p-2 rounded-lg" onClick={() => sendvote('false')}>dw</button>{movieinfo.vote_down ? <label>{movieinfo.vote_down} </label> : <></>}
-                        </div>
-                    </div>
-                    <div className="flex w-full p-6">
-                        <form
-                            className="space-y-4 md:space-y-6 w-1/2 pr-2"
-                            onSubmit={sendComment}
-                        >
-                            <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                                write a comment:
-                            </label>
-                            <div className="flex ">
-                                <textarea
-                                    value={comment}
-                                    onChange={(e: any) => {
-                                        setComment(e.target.value);
-                                    }}
-                                    name="comment"
-                                    className=" bg-gray-50 h-28 w-3/4 border border-gray-300 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block p-2.5"
-                                    placeholder="write a comment"
-                                    required
-                                />
-                                <button
-                                    type="submit"
-                                    className="w-1/4 ml-4 h-10 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 text-center "
-                                >
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                        <Comments movieid={movieid} />
-                    </div>
-                </div>
-            ) : (<>loadinh....</>)}
-        </div> */}
+        
       <Body body={(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
 
         </>

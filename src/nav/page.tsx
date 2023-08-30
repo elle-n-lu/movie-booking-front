@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 interface pageProps {
+  userId?: number
   setItem: (item: number) => void;
   cinemaId: number;
   user: string | undefined;
@@ -11,14 +12,15 @@ interface pageProps {
   setToken: (token: string | undefined) => void;
   setUserId: (userId: number | undefined) => void;
   setUser: (user: string | undefined) => void;
-  setSchedule:(schedule:any)=>void
-  
+  setSchedule: (schedule: any) => void
+
 }
 interface cinema {
   id: number;
   cinema_name: string;
 }
 const Nav: React.FC<pageProps> = ({
+  userId,
   setToken,
   setUserId,
   setUser,
@@ -51,7 +53,7 @@ const Nav: React.FC<pageProps> = ({
   return (
     <nav className="flex bg-black justify-between items-center">
       <div>
-      <label className=" text-white font-bold text-lg text-center px-14 py-2 " ><Link href='/'>Movie tonight</Link></label>
+        <label className=" text-white font-bold text-lg text-center px-14 py-2 " ><Link href='/'>Movie tonight</Link></label>
 
         {/*  mapping cinemas */}
         <select
@@ -77,18 +79,19 @@ const Nav: React.FC<pageProps> = ({
       </div>
 
       <ul className="font-medium flex m-6">
-        <li>
-          <a
-            href="#"
-            className="block pb-2 hover:pb-0 pl-3 pr-4 text-gray-400 hover:text-white hover:border-b-2 "
-          >
-            About
-          </a>
-        </li>
+
         {user ? (
           <>
+            <li>
+              <Link
+                href={{ pathname: "/orders", query: { id: userId } }}
+                className="block pb-2 hover:pb-0 pl-3 pr-4 text-gray-400 hover:text-white hover:border-b-2 "
+              >
+                My Orders
+              </Link>
+            </li>
             <li className=" text-gray-400 px-4">
-             hi,{" "} {user}{" "}
+              hi,{" "} {user}{" "}
             </li>
             <li>
               <button

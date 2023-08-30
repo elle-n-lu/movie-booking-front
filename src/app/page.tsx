@@ -17,7 +17,7 @@ export default function Home() {
     <>
     <Seat setMovieCalue={setCalue} seats={seats} setSchedule={setSchedule}  setSeats={setSeats} cinemaId={cinemeId} setSeatId={setSeatId} setItem={setItem} />
       <Movie  calue={calue} setCalue={setCalue} userid={userId} token={token} seatId={seatId} setSchedule={setSchedule}  item={item} setItem={setItem} cinemaId={cinemeId} setSchedules={setSchedules} setSession={setSessions} />
-      <Session schedule={schedule} setSchedule={setSchedule} token={token} userId={userId} cinemeId={cinemeId} totalseats={seats} sessions={sessions} setSessions={setSessions} schedules={schedules} />
+      <Session schedule={schedule} setSchedule={setSchedule} token={token} userId={userId} cinemeId={cinemeId} totalseats={seats}  schedules={schedules} />
     </>
   )
   return (

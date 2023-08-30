@@ -22,7 +22,7 @@ const Body: React.FC<bodyProps> = ({body})=>{
 
     return (
     <div>
-      <Nav setToken={setToken} setSchedule={setSchedule}  setUserId={setUserId} setUser={setUser} user={user} setItem={setItem} cinemaId={cinemeId} setCinemaId={setCinemaId} />
+      <Nav userId={userId} setToken={setToken} setSchedule={setSchedule}  setUserId={setUserId} setUser={setUser} user={user} setItem={setItem} cinemaId={cinemeId} setCinemaId={setCinemaId} />
         {body(cinemeId, item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)}
     </div>)
 }

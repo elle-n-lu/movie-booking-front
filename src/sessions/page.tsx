@@ -10,18 +10,13 @@ import Ticket from "@/components/ticket";
 interface pageProps {
   token: string | undefined;
   schedules: schedule[];
-  sessions: session[];
-  setSessions: (session: session[]) => void;
   totalseats: seat_p[];
   cinemeId: number;
   userId: number | undefined | null;
   schedule:schedule 
   setSchedule:(schedule:schedule)=>void
 }
-interface seatS {
-  seatNo: string;
-  sold: boolean;
-}
+
 const seatlayouts = (solds: any, totalseats: number) => {
   const rows = ["A", "B", "C", "D", "E", "F"];
   const all = [];
@@ -45,8 +40,6 @@ const Session: React.FC<pageProps> = ({
   cinemeId,
   schedules,
   totalseats,
-  sessions,
-  setSessions,
   schedule, setSchedule
 }) => {
   const totalseat_len = totalseats.length;
@@ -67,10 +60,11 @@ const Session: React.FC<pageProps> = ({
   };
   // open modal to select seat
   const [open, setOpen] = useState(false);
+  const [price, setPrice] = useState(0)
   // according to seats total number, set up the seats layout.
   const seatsLayout = seatSold ? seatlayouts(seatSold, totalseat_len) : [];
   const [checkedSeats, setCheckedSeats] = useState<any[]>([]);
-
+  const [totalprice, setTotalPrice]=useState(0)
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -79,6 +73,7 @@ const Session: React.FC<pageProps> = ({
       setCheckedSeats(checkedSeats.filter((seat) => seat !== seatNo));
     } else {
       setCheckedSeats([...checkedSeats, seatNo]);
+      setTotalPrice([...checkedSeats, seatNo].length*price)
     }
   };
 
@@ -86,9 +81,10 @@ const Session: React.FC<pageProps> = ({
 
   const isSeatSold = (seatNo: any) => seatSold.includes(seatNo);
 
-  const createOrder = async (checkedSeats: any, cinemeId: any, sessionId: any) => {
+  const createOrder = async (totalprice:any,checkedSeats: any, cinemeId: any, sessionId: any) => {
     const formData = new FormData();
     formData.append("seat", checkedSeats);
+    formData.append("total_price", totalprice);
     await api_url
       .post(
         `/orders/create_new/${cinemeId}/${sessionId}`,
@@ -102,6 +98,7 @@ const Session: React.FC<pageProps> = ({
       })
       .catch((err) => console.log("errr", err));
   };
+  console.log('toalprice',totalprice)
   useEffect(() => {
     if (sessionId) {
       fetchsolds();
@@ -152,6 +149,7 @@ const Session: React.FC<pageProps> = ({
                 })}
               </tbody>
             </table>
+            Total Price: {checkedSeats.length*price}
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
             {userId ? (
@@ -160,9 +158,10 @@ const Session: React.FC<pageProps> = ({
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                 onClick={(e) => {
                   e.preventDefault();
-                  createOrder(checkedSeats, cinemeId, sessionId);
+                  createOrder(totalprice,checkedSeats, cinemeId, sessionId);
                   setOpen(false);
                   setCheckedSeats([]);
+                  setTotalPrice(0);
                 }}
               >
                 Submit
@@ -182,6 +181,7 @@ const Session: React.FC<pageProps> = ({
               onClick={() => {
                 setOpen(false);
                 setCheckedSeats([]);
+                setTotalPrice(0)
               }}
             >
               Cancel
@@ -216,7 +216,7 @@ const Session: React.FC<pageProps> = ({
           );
         })}
       </div>
-      {schedule && <Ticket setOpen={setOpen} schedule={schedule} setSessionId={setSessionId} />}
+      {schedule && <Ticket setPrice={setPrice} setOpen={setOpen} schedule={schedule} setSessionId={setSessionId} />}
     </div>
   );
 };

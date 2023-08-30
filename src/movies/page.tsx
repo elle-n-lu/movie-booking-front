@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 export interface session {
   session_time: string;
   id: number
+  price:number
 }
 
 export interface schedule {
@@ -38,7 +39,7 @@ const movieslicer = (movie: any) => {
     movieslist.push(movie);
     return movieslist;
   } else {
-    n = Math.floor(movie.length / 2); //n=3, movies = 13
+    n = Math.round(movie.length / 2)+1; //n=3, movies = 13
     for (let i = 0; i < movie.length; i += n) {
       // i= 0,4,8,12
       movieslist.push(movie.slice(i, i + n));
@@ -79,7 +80,6 @@ const Movie: React.FC<pageProps> = ({
     await api_url
       .get("/ajax_schedules/" + cinemaId+'/'+seatId+'/'+movieId)
       .then((res) => {
-        console.log('schedule',res)
         setSchedules(res.data);
       })
       .catch((err) => console.log("errr", err));
