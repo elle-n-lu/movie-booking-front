@@ -1,17 +1,16 @@
 "use client";
 import { api_url } from "@/api";
+import { user } from "@/components/body";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 interface pageProps {
-  userId?: number
   setItem: (item: number) => void;
   cinemaId: number;
-  user: string | undefined;
+  user?: user ;
   setCinemaId: (id: number) => void;
   setToken: (token: string | undefined) => void;
-  setUserId: (userId: number | undefined) => void;
-  setUser: (user: string | undefined) => void;
+  setUser: (user?: user) => void;
   setSchedule: (schedule: any) => void
 
 }
@@ -20,9 +19,7 @@ interface cinema {
   cinema_name: string;
 }
 const Nav: React.FC<pageProps> = ({
-  userId,
   setToken,
-  setUserId,
   setUser,
   user,
   setItem,
@@ -31,7 +28,6 @@ const Nav: React.FC<pageProps> = ({
   setSchedule
 }) => {
   // retrieve all cienams name and map in select options
-  //make options a grid box
 
   const [cinemas, setCinemas] = useState([]);
   const getcinemas = async () => {
@@ -44,12 +40,13 @@ const Nav: React.FC<pageProps> = ({
     localStorage.removeItem("access");
     localStorage.removeItem("user");
     setToken(undefined);
-    setUserId(undefined);
     setUser(undefined);
+    window.location.reload()
   };
   useEffect(() => {
     getcinemas();
   }, []);
+
   return (
     <nav className="flex bg-black justify-between items-center">
       <div>
@@ -84,14 +81,14 @@ const Nav: React.FC<pageProps> = ({
           <>
             <li>
               <Link
-                href={{ pathname: "/orders", query: { id: userId } }}
+                href={{ pathname: "/orders", query: { id: user.id } }}
                 className="block pb-2 hover:pb-0 pl-3 pr-4 text-gray-400 hover:text-white hover:border-b-2 "
               >
                 My Orders
               </Link>
             </li>
             <li className=" text-gray-400 px-4">
-              hi,{" "} {user}{" "}
+              hi,{" "} {user.name}{" "}
             </li>
             <li>
               <button

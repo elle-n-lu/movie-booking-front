@@ -23,7 +23,7 @@ const Registe: React.FC<registeProps> = () => {
       .then((res) => router.push("/login"))
       .catch((error) => {console.log("error.response.data[0]",JSON.stringify(error.response.data.error));setMessage(JSON.stringify(error.response.data.error))});
   };
-  const body=(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
+  const body=(item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
     <>
 
     <div className="flex flex-col border-2 w-1/2 items-center justify-center px-6 py-8 mx-auto md:h-1/2 lg:py-0">
@@ -94,7 +94,7 @@ const Registe: React.FC<registeProps> = () => {
     </>)
   return (
     <>
-      <Body body={(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
+      <Body body={(item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,user, setUser,token, setToken,schedule, setSchedule)} />
     </>
   );
 };

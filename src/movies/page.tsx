@@ -1,4 +1,5 @@
 import { api_url } from "@/api";
+import { user } from "@/components/body";
 import SlideBbuttons from "@/components/slide_buttons";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ interface pageProps {
   setSession: (session: session[]) => void;
   setSchedule:(schedule:any)=>void
   token:string | undefined
-  userid: number | undefined
+  user?: user 
   setCalue:(calue:number)=>void
   calue:number
 }
@@ -56,7 +57,7 @@ const Movie: React.FC<pageProps> = ({
   setSession,
   setSchedule,
   token,
-  userid,calue, setCalue
+  user,calue, setCalue
 }) => {
  
   const [movielist, setMovielist] = useState<any[]>([]);
@@ -106,7 +107,7 @@ const Movie: React.FC<pageProps> = ({
              <Link href={{pathname:"/movieinfo",query:{
               id:movie.id,
               token: token,
-              user:userid
+              user:user?.id
              }}}  > <img src={movie.movie_poster} className="mx-auto" style={{width:'150px',height:"220px",objectFit:'contain'}} /></Link>
               <button className=" p-2 m-2   "
               onClick={()=>setCalue(index)}

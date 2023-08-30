@@ -6,13 +6,14 @@ import { api_url } from "@/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Ticket from "@/components/ticket";
+import { user } from "@/components/body";
 
 interface pageProps {
   token: string | undefined;
   schedules: schedule[];
   totalseats: seat_p[];
   cinemeId: number;
-  userId: number | undefined | null;
+  user?: user;
   schedule:schedule 
   setSchedule:(schedule:schedule)=>void
 }
@@ -36,7 +37,7 @@ const seatlayouts = (solds: any, totalseats: number) => {
 
 const Session: React.FC<pageProps> = ({
   token,
-  userId,
+  user,
   cinemeId,
   schedules,
   totalseats,
@@ -98,7 +99,6 @@ const Session: React.FC<pageProps> = ({
       })
       .catch((err) => console.log("errr", err));
   };
-  console.log('toalprice',totalprice)
   useEffect(() => {
     if (sessionId) {
       fetchsolds();
@@ -152,7 +152,7 @@ const Session: React.FC<pageProps> = ({
             Total Price: {checkedSeats.length*price}
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            {userId ? (
+            {user ? (
               <button
                 type="button"
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"

@@ -1,7 +1,7 @@
 "use client"
 import { api_url } from '@/api'
 import Body from '@/components/body'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 interface pageProps {
 
@@ -9,7 +9,7 @@ interface pageProps {
 interface order {
     id: number
     seat: string
-    total_price:number
+    total_price: number
     registed_date: string
     session: {
         session_time: string
@@ -27,6 +27,7 @@ interface order {
 }
 const Order: React.FC<pageProps> = () => {
     const searchParams = useSearchParams();
+    const router = useRouter()
     const userid = searchParams.get("id") ?? ""; // default value is ""
     const [orders, setOrders] = useState<order[]>([])
     const fetchmyorders = async () => {
@@ -39,10 +40,15 @@ const Order: React.FC<pageProps> = () => {
                 console.log("errr", err.response.data)
             });
     }
+
     useEffect(() => {
         fetchmyorders()
+        if (!localStorage.getItem("user")) {
+            router.push('/')
+        }
     }, [])
-    const body = (item: any, setItem: any, userId: any, setUserId: any, user: any, setUser: any, token: any, setToken: any, schedule: any, setSchedule: any) => (
+    const body = (cinemeId: any, item: any, setItem: any, user: any, setUser: any, token: any, setToken: any, schedule: any, setSchedule: any) =>
+    (
         <div className="mt-10">
             <table className="border mx-auto text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -73,7 +79,7 @@ const Order: React.FC<pageProps> = () => {
                                 <td className='px-6 py-4'>
                                     {order.seat}</td>
                                 <td className='px-6 py-4'>
-                                   $ {order.total_price}
+                                    $ {order.total_price}
                                 </td>
                             </tr>
                         ))
@@ -81,9 +87,12 @@ const Order: React.FC<pageProps> = () => {
                 </tbody></table>
         </div>
     )
+
+
+
     return (
         <>
-            <Body body={(item: any, setItem: any, userId: any, setUserId: any, user: any, setUser: any, token: any, setToken: any, schedule: any, setSchedule: any) => body(item, setItem, userId, setUserId, user, setUser, token, setToken, schedule, setSchedule)} />
+            <Body body={(cinemeId: any, item: any, setItem: any, user: any, setUser: any, token: any, setToken: any, schedule: any, setSchedule: any) => body(cinemeId, item, setItem, user, setUser, token, setToken, schedule, setSchedule)} />
         </>
 
     )

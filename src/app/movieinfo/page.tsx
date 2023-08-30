@@ -135,7 +135,7 @@ const Movieinfo: React.FC<movieinfoProps> = () => {
         getVotestatus()
     }, []);
     // console.log('info', movieinfo)
-    const body=(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
+    const body=(item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
         <>
          <div className="p-8">
             {movieinfo ? (
@@ -191,7 +191,7 @@ const Movieinfo: React.FC<movieinfoProps> = () => {
         <>
         
         
-      <Body body={(item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
+      <Body body={(item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(item, setItem,user, setUser,token, setToken,schedule, setSchedule)} />
 
         </>
     );

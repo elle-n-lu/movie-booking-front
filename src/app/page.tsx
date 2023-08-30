@@ -13,16 +13,16 @@ export default function Home() {
   const [seats, setSeats] = useState<seat_p[]>([]);
   const [sessions, setSessions] = useState<any[]>([])
   const [calue, setCalue] = useState<any>(-1)
-  const body=(cinemeId:any,item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
+  const body=(cinemeId:any,item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
     <>
     <Seat setMovieCalue={setCalue} seats={seats} setSchedule={setSchedule}  setSeats={setSeats} cinemaId={cinemeId} setSeatId={setSeatId} setItem={setItem} />
-      <Movie  calue={calue} setCalue={setCalue} userid={userId} token={token} seatId={seatId} setSchedule={setSchedule}  item={item} setItem={setItem} cinemaId={cinemeId} setSchedules={setSchedules} setSession={setSessions} />
-      <Session schedule={schedule} setSchedule={setSchedule} token={token} userId={userId} cinemeId={cinemeId} totalseats={seats}  schedules={schedules} />
+      <Movie  calue={calue} setCalue={setCalue}  token={token} seatId={seatId} setSchedule={setSchedule}  item={item} setItem={setItem} cinemaId={cinemeId} setSchedules={setSchedules} setSession={setSessions} />
+      <Session user={user} schedule={schedule} setSchedule={setSchedule} token={token} cinemeId={cinemeId} totalseats={seats}  schedules={schedules} />
     </>
   )
   return (
     <div >
-      <Body body={(cinemeId:any,item:any, setItem:any,userId:any, setUserId:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(cinemeId,item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)} />
+      <Body body={(cinemeId:any,item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>body(cinemeId,item, setItem,user, setUser,token, setToken,schedule, setSchedule)} />
     </div>
   )
 }

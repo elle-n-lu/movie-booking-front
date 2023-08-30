@@ -3,27 +3,29 @@ import React, { useEffect, useState } from 'react'
 interface bodyProps {
 body:any
 }
+export interface user{
+  id:number
+  name:string
+}
 const Body: React.FC<bodyProps> = ({body})=>{
     const [cinemeId, setCinemaId] = useState(1)
   const [item, setItem] = useState(0);
-  const [userId, setUserId] = useState<number | undefined>()
-  const [user, setUser] = useState<string | undefined>()
+  const [user, setUser] = useState<user>()
   const [token, setToken] = useState<string | undefined>()
   const [schedule, setSchedule] = useState<any>()
   
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem("access") && localStorage.getItem("user")) {
       setToken(localStorage.getItem("access") as string)
-      setUserId(JSON.parse(localStorage.getItem("user") as string).id)
-      setUser(JSON.parse(localStorage.getItem("user") as string).name)
+      setUser(JSON.parse(localStorage.getItem("user") as string) as user)
     }
   }, [])
 
 
     return (
     <div>
-      <Nav userId={userId} setToken={setToken} setSchedule={setSchedule}  setUserId={setUserId} setUser={setUser} user={user} setItem={setItem} cinemaId={cinemeId} setCinemaId={setCinemaId} />
-        {body(cinemeId, item, setItem,userId, setUserId,user, setUser,token, setToken,schedule, setSchedule)}
+      <Nav setToken={setToken} setSchedule={setSchedule} setUser={setUser} user={user} setItem={setItem} cinemaId={cinemeId} setCinemaId={setCinemaId} />
+        {body(cinemeId, item, setItem,user, setUser,token, setToken,schedule, setSchedule)}
     </div>)
 }
 export default Body
