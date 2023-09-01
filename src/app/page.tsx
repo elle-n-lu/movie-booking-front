@@ -16,7 +16,7 @@ export default function Home() {
   const body=(cinemeId:any,item:any, setItem:any,user:any, setUser:any,token:any, setToken:any,schedule:any, setSchedule:any)=>(
     <>
     <Seat setMovieCalue={setCalue} seats={seats} setSchedule={setSchedule}  setSeats={setSeats} cinemaId={cinemeId} setSeatId={setSeatId} setItem={setItem} />
-      <Movie  calue={calue} setCalue={setCalue}  token={token} seatId={seatId} setSchedule={setSchedule}  item={item} setItem={setItem} cinemaId={cinemeId} setSchedules={setSchedules} setSession={setSessions} />
+      <Movie user={user} calue={calue} setCalue={setCalue}  token={token} seatId={seatId} setSchedule={setSchedule}  item={item} setItem={setItem} cinemaId={cinemeId} setSchedules={setSchedules} setSession={setSessions} />
       <Session user={user} schedule={schedule} setSchedule={setSchedule} token={token} cinemeId={cinemeId} totalseats={seats}  schedules={schedules} />
     </>
   )

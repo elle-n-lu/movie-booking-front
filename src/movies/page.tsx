@@ -89,7 +89,6 @@ const Movie: React.FC<pageProps> = ({
     getmovies();
   }, [cinemaId,seatId]);
 
-  // const [calue, setCalue] = useState(-1)
   const body = (item: number) => {
     if (movielist.length > 0) {
       return (
